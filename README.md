@@ -18,7 +18,12 @@ asyncFunc(function (err) {
 });
 
 asyncFunc(function (err) {
-  error.if(err, '');
+  error.if(err, 'bad things happened');
+});
+
+asyncFunc(function (err, data) {
+  error.if(err, 'bad things happened');
+  error.ifNot(data, 'data wasn't returned');
 });
 ```
 
