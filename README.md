@@ -23,7 +23,7 @@ asyncFunc(function (err) {
 
 asyncFunc(function (err, data) {
   error.if(err, 'bad things happened');
-  error.ifNot(data, 'data wasn't returned');
+  error.ifNot(data, 'data wasn\'t returned');
 });
 ```
 
