@@ -4,32 +4,39 @@
 'use strict';
 
 
-function ifCheck (check, string) {
+function ifCheck (check, string, func) {
+  if (typeof string === 'function' && !func) {
+    func = string;
+    string = null;
+  }
+
   // check to throw error
   if (check || check instanceof Error) {
-    // if string is function, forward check to handler
-    if (typeof string === 'function') {
-      string(check);
+    // attach string to existing error stack and message
+    if (check instanceof Error && typeof string === 'string') {
+      check.message = string + ' :: ' + check.message;
+    }
 
+    var err = check instanceof Error
+      ? check
+      : new Error(string)
+    ;
+
+    if (typeof func === 'function') {
+      func(check);
     } else {
-
-      // attach string to existing error stack and message
-      if (check instanceof Error && typeof string === 'string') {
-        check.message = string + ' :: ' + check.message;
-      }
-
       // throw error
-      throw check instanceof Error ? check : new Error(string);
+      throw err;
     }
   }
 }
 
-function ifNotCheck (check, string) {
-  ifCheck(check instanceof Error ? check : !check, string);
+function ifNotCheck (check, string, func) {
+  ifCheck(check instanceof Error ? check : !check, string, func);
 }
 
 
 module.exports = {
-  'if'   : ifCheck,
+  'if':    ifCheck,
   'ifNot': ifNotCheck
 };
