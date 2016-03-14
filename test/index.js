@@ -44,7 +44,7 @@ describe('Error Package', function () {
     it('calls second argument if first is true and second argument is a function with value or error as argument', function () {
       assert.doesNotThrow(function () {
         error.if(true, function (check) {
-          assert.strictEqual(true, check);
+          assert(check instanceof Error);
         });
       });
     });

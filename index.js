@@ -23,7 +23,7 @@ function ifCheck (check, string, func) {
     ;
 
     if (typeof func === 'function') {
-      func(check);
+      func(err);
     } else {
       // throw error
       throw err;
